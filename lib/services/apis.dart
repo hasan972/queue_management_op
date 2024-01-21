@@ -1,5 +1,5 @@
 class Api {
-  static String ip = '10.168.86.230';
+  static String ip = '10.168.87.175';
   static String port = '8000';
   static String app = 'queue_management';
 
