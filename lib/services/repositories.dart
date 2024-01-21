@@ -12,7 +12,7 @@ class Repositories {
       http.Response response = await Provider().getChkNumDP(chkOpen);
       chkNumData = json.decode(response.body);
       if (chkNumData['status'] == "Success") {
-        print(chkNumData);
+        // print(chkNumData);
         return chkNumData;
       }
     } on Exception catch (e) {
@@ -29,13 +29,13 @@ class Repositories {
     try {
       http.Response response = await Provider().updateChknumDp(id, status);
       chkNumData = json.decode(response.body);
-      if (chkNumData['status'] == "Success") {
-        print(chkNumData);
-        return chkNumData;
-      }
+      // if (chkNumData['status'] == "Success") {
+      //   // print(chkNumData);
+      //   // return chkNumData;
+      // }
     } on Exception catch (e) {
       throw Exception(e);
     }
-    return chkNumData;
+    // return chkNumData;
   }
 }
