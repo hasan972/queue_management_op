@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   getChk() {
-    Timer.periodic(Duration(seconds: 5), (timer) async {
+    Timer.periodic(const Duration(milliseconds: 500), (timer) async {
       chkNumList = await Repositories().getChk('F');
       //servedNumList = await Repositories().getChk('SERVING');
       setState(() {});
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     // '1007',
     // '1008'
   ];
-  List<String> nowServingNumbers = [];
+  List nowServingNumbers = [];
   List<String> servedNumbers = [];
 
   @override
@@ -56,303 +56,300 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           children: [
             // In Process Section
-            chkNumList.isEmpty
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(
-                    height: 350,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: MyColors().mainColor,
-                      border: Border.all(color: Colors.black, width: 2.0),
+            Expanded(
+              child: Container(
+                // height: 350,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: MyColors().mainColor,
+                  border: Border.all(color: Colors.black, width: 2.0),
+                ),
+                child: chkNumList.isEmpty
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 100),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 15,
+                                  width: 15,
+                                  color: MyColors().mainColor2,
+                                ),
+                                const SizedBox(height: 5),
+                                Container(
+                                  height: 15,
+                                  width: 15,
+                                  color: MyColors().mainColor2,
+                                ),
+                                const SizedBox(height: 5),
+                                Container(
+                                  height: 15,
+                                  width: 15,
+                                  color: MyColors().mainColor2,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 5, bottom: 5, left: 5),
+                            child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'IN PROCESS',
+                                  style: TextStyle(
+                                      color: MyColors().mainColor2,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: chkNumList['chk_data'].length,
+                              itemBuilder: (itemBuilder, index) {
+                                return Draggable(
+                                  data: chkNumList['chk_data'][index],
+                                  feedback: Material(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Text(
+                                        chkNumList['chk_data'][index]['chk_num']
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold,
+                                          backgroundColor:
+                                              MyColors().mainColor2,
+                                          color: MyColors().mainColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onDragCompleted: () {
+                                    Repositories().updateChk(
+                                        chkNumList['chk_data'][index]['id'],
+                                        'SERVING');
+                                    // setState(() {
+                                    //   inProcessNumbers.removeAt(index);
+                                    // });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 120, vertical: 0),
+                                    child: Card(
+                                      color: MyColors()
+                                          .mainColor2, // Set the card background color
+                                      child: Text(
+                                        chkNumList['chk_data'][index]['chk_num']
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold,
+                                          color: MyColors().mainColor,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+            ),
+            // Now Serving Section
+            Expanded(
+              child: Container(
+                height: 280,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 2.0),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 100),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 15,
+                            width: 15,
+                            color: MyColors().mainColor,
+                          ),
+                          const SizedBox(height: 5),
+                          Container(
+                            height: 15,
+                            width: 15,
+                            color: MyColors().mainColor,
+                          ),
+                          const SizedBox(height: 5),
+                          Container(
+                            height: 15,
+                            width: 15,
+                            color: MyColors().mainColor,
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 100),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                height: 15,
-                                width: 15,
-                                color: MyColors().mainColor2,
-                              ),
-                              SizedBox(height: 5),
-                              Container(
-                                height: 15,
-                                width: 15,
-                                color: MyColors().mainColor2,
-                              ),
-                              SizedBox(height: 5),
-                              Container(
-                                height: 15,
-                                width: 15,
-                                color: MyColors().mainColor2,
-                              ),
-                            ],
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 5, bottom: 5, left: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'NOW SERVING',
+                            style: TextStyle(
+                                color: MyColors().mainColor,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: 5, bottom: 5, left: 5),
-                          child: Row(
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'IN PROCESS',
-                                style: TextStyle(
-                                    color: MyColors().mainColor2,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: chkNumList['chk_data'].length,
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: DragTarget(
+                        onAccept: (data) {
+                          setState(() {
+                            nowServingNumbers.add(data);
+                            // print(nowServingNumbers);
+                          });
+                        },
+                        builder: (context, candidateData, rejectedData) {
+                          return ListView.builder(
+                            itemCount: nowServingNumbers.length,
                             itemBuilder: (itemBuilder, index) {
-                              return Draggable(
-                                data: chkNumList['chk_data'][index],
+                              return InkWell(
+                                onDoubleTap: () {
+                                  Repositories().updateChk(
+                                      nowServingNumbers[index]['id'], 'SERVED');
+                                  nowServingNumbers.removeAt(index);
+                                  setState(() {});
+                                },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 120, vertical: 0),
                                   child: Card(
                                     color: MyColors()
-                                        .mainColor2, // Set the card background color
+                                        .mainColor, // Set the card background color
                                     child: Text(
-                                      chkNumList['chk_data'][index]['chk_num']
+                                      nowServingNumbers[index]['chk_num']
                                           .toString(),
                                       style: TextStyle(
                                         fontSize: 30,
                                         fontWeight: FontWeight.bold,
-                                        color: MyColors().mainColor,
+                                        color: MyColors().mainColor2,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
-                                feedback: Material(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8),
-                                    child: Text(
-                                      chkNumList['chk_data'][index]['chk_num']
-                                          .toString(),
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                        backgroundColor: MyColors().mainColor2,
-                                        color: MyColors().mainColor,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onDragCompleted: () {
-                                  setState(() {
-                                    inProcessNumbers.removeAt(index);
-                                  });
-                                },
                               );
                             },
-                          ),
-                        ),
-                      ],
+                          );
+                        },
+                      ),
                     ),
-                  ),
-            // Now Serving Section
-            Container(
-              height: 350,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 2.0),
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 100),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 15,
-                          width: 15,
-                          color: MyColors().mainColor,
-                        ),
-                        SizedBox(height: 5),
-                        Container(
-                          height: 15,
-                          width: 15,
-                          color: MyColors().mainColor,
-                        ),
-                        SizedBox(height: 5),
-                        Container(
-                          height: 15,
-                          width: 15,
-                          color: MyColors().mainColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5, left: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'NOW SERVING',
-                          style: TextStyle(
-                              color: MyColors().mainColor,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: DragTarget(
-                      onAccept: (data) {
-                        setState(() {
-                          nowServingNumbers.add(data.toString());
-                          print(nowServingNumbers);
-                        });
-                      },
-                      builder: (context, candidateData, rejectedData) {
-                        return ListView.builder(
-                          itemCount: nowServingNumbers.length,
-                          itemBuilder: (itemBuilder, index) {
-                            return Draggable(
-                              data: nowServingNumbers[index],
-                              feedback: Material(
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Text(
-                                    nowServingNumbers[index],
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                        backgroundColor: MyColors().mainColor,
-                                        color: MyColors().mainColor2),
-                                  ),
-                                ),
-                              ),
-                              childWhenDragging: Container(),
-                              onDragCompleted: () {
-                                setState(() {
-                                  nowServingNumbers.removeAt(index);
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 120, vertical: 0),
-                                child: Card(
-                                  color: MyColors()
-                                      .mainColor, // Set the card background color
-                                  child: Text(
-                                    nowServingNumbers[index],
-                                    style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: MyColors().mainColor2,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             // Served Section
-            Container(
-              height: 75,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: MyColors().mainColor,
-                border: Border.all(color: Colors.black, width: 2.0),
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    '  SERVED',
-                    style: TextStyle(
-                        color: MyColors().mainColor2,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Expanded(
-                    child: DragTarget(
-                      onAccept: (data) {
-                        setState(() {
-                          servedNumbers.remove(data.toString());
-                        });
+            // Container(
+            //   height: 75,
+            //   width: double.infinity,
+            //   decoration: BoxDecoration(
+            //     color: MyColors().mainColor,
+            //     border: Border.all(color: Colors.black, width: 2.0),
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       Text(
+            //         '  SERVED',
+            //         style: TextStyle(
+            //             color: MyColors().mainColor2,
+            //             fontSize: 30,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Expanded(
+            //         child: DragTarget(
+            //           onAccept: (data) {
+            //             setState(() {
+            //               servedNumbers.remove(data.toString());
+            //             });
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Order complete for "chk-$data"',
-                              style: TextStyle(
-                                  color: MyColors().mainColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                            duration: Duration(seconds: 1),
-                            backgroundColor: MyColors().mainColor2,
-                          ),
-                        );
-                      },
-                      builder: (context, candidateData, rejectedData) {
-                        // return Container();
-                        return ListView.builder(
-                          itemCount: servedNumbers.length,
-                          itemBuilder: (itemBuilder, index) {
-                            return Draggable(
-                              data: servedNumbers[index],
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 100, vertical: 0),
-                                child: Text(
-                                  servedNumbers[index],
-                                  style: const TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              feedback: Material(
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Text(
-                                    servedNumbers[index],
-                                    style: const TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              childWhenDragging: Container(),
-                              onDragCompleted: () {
-                                setState(() {
-                                  servedNumbers.removeAt(index);
-                                });
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            //             ScaffoldMessenger.of(context).showSnackBar(
+            //               SnackBar(
+            //                 content: Text(
+            //                   'Order complete for "chk-$data"',
+            //                   style: TextStyle(
+            //                       color: MyColors().mainColor,
+            //                       fontSize: 18,
+            //                       fontWeight: FontWeight.bold),
+            //                   textAlign: TextAlign.center,
+            //                 ),
+            //                 duration: const Duration(seconds: 1),
+            //                 backgroundColor: MyColors().mainColor2,
+            //               ),
+            //             );
+            //           },
+            //           builder: (context, candidateData, rejectedData) {
+            //             // return Container();
+            //             return ListView.builder(
+            //               itemCount: servedNumbers.length,
+            //               itemBuilder: (itemBuilder, index) {
+            //                 return Draggable(
+            //                   data: servedNumbers[index],
+            //                   feedback: Material(
+            //                     child: Container(
+            //                       padding: const EdgeInsets.all(8),
+            //                       child: Text(
+            //                         servedNumbers[index],
+            //                         style: const TextStyle(
+            //                           fontSize: 30,
+            //                           fontWeight: FontWeight.bold,
+            //                         ),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                   childWhenDragging: Container(),
+            //                   onDragCompleted: () {
+            //                     setState(() {
+            //                       servedNumbers.removeAt(index);
+            //                     });
+            //                   },
+            //                   child: Padding(
+            //                     padding: const EdgeInsets.symmetric(
+            //                         horizontal: 100, vertical: 0),
+            //                     child: Text(
+            //                       servedNumbers[index],
+            //                       style: const TextStyle(
+            //                         fontSize: 30,
+            //                         fontWeight: FontWeight.bold,
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 );
+            //               },
+            //             );
+            //           },
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
