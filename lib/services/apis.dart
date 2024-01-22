@@ -10,3 +10,16 @@ class Api {
   static String updateChkNum(int id, String status) =>
       'http://$ip:$port/$app/default/update_chk?id=$id&status=$status';
 }
+
+// for online apply
+// class Api {
+//   // static String ip = '10.168.87.175';
+//   // static String port = '8000';
+//   static String address = '';
+//   static String app = 'queue_management';
+
+//   static String getChkNum(String chkOpen) =>
+//       '$address/$app/default/get_chk?chk_open=$chkOpen';
+//   static String updateChkNum(int id, String status) =>
+//       '$address/$app/default/update_chk?id=$id&status=$status';
+// }

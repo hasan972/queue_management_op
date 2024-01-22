@@ -100,57 +100,113 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Expanded(
-                            child: ListView.builder(
-                              itemCount: chkNumList['chk_data'].length,
-                              itemBuilder: (itemBuilder, index) {
-                                return Draggable(
-                                  data: chkNumList['chk_data'][index],
-                                  feedback: Material(
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Text(
-                                        chkNumList['chk_data'][index]['chk_num']
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold,
-                                          backgroundColor:
-                                              MyColors().white,
-                                          color: MyColors().mainColor,
+                              child: GridView.builder(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.all(8.0),
+                                  scrollDirection: Axis.vertical,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 150,
+                                          childAspectRatio: 4 / 2,
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10),
+                                  itemCount: chkNumList['chk_data'].length,
+                                  itemBuilder: (itemBuilder, index) {
+                                    return Draggable(
+                                      data: chkNumList['chk_data'][index],
+                                      feedback: Material(
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Text(
+                                            chkNumList['chk_data'][index]
+                                                    ['chk_num']
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold,
+                                              backgroundColor: MyColors().white,
+                                              color: MyColors().mainColor,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  onDragCompleted: () {
-                                    Repositories().updateChk(
-                                        chkNumList['chk_data'][index]['id'],
-                                        'SERVING');
-                                    // setState(() {
-                                    //   inProcessNumbers.removeAt(index);
-                                    // });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 120, vertical: 0),
-                                    child: Card(
-                                      color: MyColors()
-                                          .white, // Set the card background color
-                                      child: Text(
-                                        chkNumList['chk_data'][index]['chk_num']
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold,
-                                          color: MyColors().mainColor,
+                                      onDragCompleted: () {
+                                        Repositories().updateChk(
+                                            chkNumList['chk_data'][index]['id'],
+                                            'SERVING');
+                                        // setState(() {
+                                        //   inProcessNumbers.removeAt(index);
+                                        // });
+                                      },
+                                      child: Card(
+                                        color: MyColors()
+                                            .white, // Set the card background color
+                                        child: Center(
+                                          child: Text(
+                                            chkNumList['chk_data'][index]
+                                                    ['chk_num']
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold,
+                                              color: MyColors().mainColor,
+                                            ),
+                                            // textAlign: TextAlign.center,
+                                          ),
                                         ),
-                                        textAlign: TextAlign.center,
                                       ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
+                                    );
+                                  })
+                              //     ListView.builder(
+                              //   itemCount: chkNumList['chk_data'].length,
+                              //   itemBuilder: (itemBuilder, index) {
+                              //     return Draggable(
+                              //       data: chkNumList['chk_data'][index],
+                              //       feedback: Material(
+                              //         child: Container(
+                              //           padding: const EdgeInsets.all(8),
+                              //           child: Text(
+                              //             chkNumList['chk_data'][index]['chk_num']
+                              //                 .toString(),
+                              //             style: TextStyle(
+                              //               fontSize: 30,
+                              //               fontWeight: FontWeight.bold,
+                              //               backgroundColor: MyColors().white,
+                              //               color: MyColors().mainColor,
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       onDragCompleted: () {
+                              //         Repositories().updateChk(
+                              //             chkNumList['chk_data'][index]['id'],
+                              //             'SERVING');
+                              //         // setState(() {
+                              //         //   inProcessNumbers.removeAt(index);
+                              //         // });
+                              //       },
+                              //       child: Padding(
+                              //         padding: const EdgeInsets.symmetric(
+                              //             horizontal: 120, vertical: 0),
+                              //         child: Card(
+                              //           color: MyColors()
+                              //               .white, // Set the card background color
+                              //           child: Text(
+                              //             chkNumList['chk_data'][index]['chk_num']
+                              //                 .toString(),
+                              //             style: TextStyle(
+                              //               fontSize: 30,
+                              //               fontWeight: FontWeight.bold,
+                              //               color: MyColors().mainColor,
+                              //             ),
+                              //             textAlign: TextAlign.center,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
+                              ),
                         ],
                       ),
               ),
@@ -216,43 +272,89 @@ class _HomePageState extends State<HomePage> {
                         },
                         builder: (context, candidateData, rejectedData) {
                           return chkNumList.isEmpty
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    :ListView.builder(
-                            // itemCount: nowServingNumbers.length
-                            itemCount: servedNumList['chk_data'].length,
-                            itemBuilder: (itemBuilder, index) {
-                              return InkWell(
-                                onDoubleTap: () {
-                                  Repositories().updateChk(
-                                      servedNumList['chk_data'][index]['id'], 'SERVED');
-                                  // nowServingNumbers.removeAt(index);
-                                  nowServingNumbers.clear();
-                                  setState(() {});
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 120, vertical: 0),
-                                  child: Card(
-                                    color: MyColors()
-                                        .mainColor, // Set the card background color
-                                    child: Text(
-                                      // nowServingNumbers[index]['chk_num']
-                                      servedNumList['chk_data'][index]['chk_num']
-                                          .toString(),
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                        color: MyColors().white,
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : GridView.builder(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.all(8.0),
+                                  scrollDirection: Axis.vertical,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 150,
+                                          childAspectRatio: 4 / 2,
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10),
+                                  itemCount: servedNumList['chk_data'].length,
+                                  itemBuilder: (itemBuilder, index) {
+                                    return InkWell(
+                                      onDoubleTap: () {
+                                        Repositories().updateChk(
+                                            servedNumList['chk_data'][index]
+                                                ['id'],
+                                            'SERVED');
+                                        // nowServingNumbers.removeAt(index);
+                                        nowServingNumbers.clear();
+                                        setState(() {});
+                                      },
+                                      child: Card(
+                                        color: MyColors()
+                                            .mainColor, // Set the card background color
+                                        child: Center(
+                                          child: Text(
+                                            // nowServingNumbers[index]['chk_num']
+                                            servedNumList['chk_data'][index]
+                                                    ['chk_num']
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold,
+                                              color: MyColors().white,
+                                            ),
+                                            // textAlign: TextAlign.center,
+                                          ),
+                                        ),
                                       ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
+                                    );
+                                  });
+
+                          // ListView.builder(
+                          //     // itemCount: nowServingNumbers.length
+                          //     itemCount: servedNumList['chk_data'].length,
+                          //     itemBuilder: (itemBuilder, index) {
+                          //       return InkWell(
+                          //         onDoubleTap: () {
+                          //           Repositories().updateChk(
+                          //               servedNumList['chk_data'][index]
+                          //                   ['id'],
+                          //               'SERVED');
+                          //           // nowServingNumbers.removeAt(index);
+                          //           nowServingNumbers.clear();
+                          //           setState(() {});
+                          //         },
+                          //         child: Padding(
+                          //           padding: const EdgeInsets.symmetric(
+                          //               horizontal: 120, vertical: 0),
+                          //           child: Card(
+                          //             color: MyColors()
+                          //                 .mainColor, // Set the card background color
+                          //             child: Text(
+                          //               // nowServingNumbers[index]['chk_num']
+                          //               servedNumList['chk_data'][index]
+                          //                       ['chk_num']
+                          //                   .toString(),
+                          //               style: TextStyle(
+                          //                 fontSize: 30,
+                          //                 fontWeight: FontWeight.bold,
+                          //                 color: MyColors().white,
+                          //               ),
+                          //               textAlign: TextAlign.center,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       );
+                          //     },
+                          //   );
                         },
                       ),
                     ),
