@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:queue_management_op/login_page.dart';
 import 'package:queue_management_op/splash_screen.dart';
 
 
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'QUEUE_OP',
-      home: SplashPage(),
+     // home: SplashPage(),
+      home: LoginPage(),
     );
   }
 }

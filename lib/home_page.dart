@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:queue_management_op/connection.dart';
 import 'package:queue_management_op/services/repositories.dart';
 import 'package:queue_management_op/theme/color/my_colors.dart';
 
@@ -15,20 +14,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // final MysqlService _mysqlService = MysqlService();
   Map chkNumList = {};
-// Map servedNumList = {};
+  Map servedNumList = {};
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getChk();
-    // openDb();
-    // returndata();
   }
 
   getChk() {
     Timer.periodic(const Duration(milliseconds: 500), (timer) async {
       chkNumList = await Repositories().getChk('F');
-      //servedNumList = await Repositories().getChk('SERVING');
+      servedNumList = await Repositories().getChk('SERVING');
       setState(() {});
     });
     // await Future.(Duration(seconds: 5), () async {
@@ -36,18 +32,9 @@ class _HomePageState extends State<HomePage> {
     // });
   }
 
-  List<String> inProcessNumbers = [
-    // '1001',
-    // '1002',
-    // '1003',
-    // '1004',
-    // '1005',
-    // '1006',
-    // '1007',
-    // '1008'
-  ];
+  //List<String> inProcessNumbers = [];
   List nowServingNumbers = [];
-  List<String> servedNumbers = [];
+  //List<String> servedNumbers = [];
 
   @override
   Widget build(BuildContext context) {
@@ -79,19 +66,19 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   height: 15,
                                   width: 15,
-                                  color: MyColors().mainColor2,
+                                  color: MyColors().white,
                                 ),
                                 const SizedBox(height: 5),
                                 Container(
                                   height: 15,
                                   width: 15,
-                                  color: MyColors().mainColor2,
+                                  color: MyColors().white,
                                 ),
                                 const SizedBox(height: 5),
                                 Container(
                                   height: 15,
                                   width: 15,
-                                  color: MyColors().mainColor2,
+                                  color: MyColors().white,
                                 ),
                               ],
                             ),
@@ -105,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                                 Text(
                                   'IN PROCESS',
                                   style: TextStyle(
-                                      color: MyColors().mainColor2,
+                                      color: MyColors().white,
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -128,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                                           fontSize: 30,
                                           fontWeight: FontWeight.bold,
                                           backgroundColor:
-                                              MyColors().mainColor2,
+                                              MyColors().white,
                                           color: MyColors().mainColor,
                                         ),
                                       ),
@@ -147,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                                         horizontal: 120, vertical: 0),
                                     child: Card(
                                       color: MyColors()
-                                          .mainColor2, // Set the card background color
+                                          .white, // Set the card background color
                                       child: Text(
                                         chkNumList['chk_data'][index]['chk_num']
                                             .toString(),
@@ -228,14 +215,20 @@ class _HomePageState extends State<HomePage> {
                           });
                         },
                         builder: (context, candidateData, rejectedData) {
-                          return ListView.builder(
-                            itemCount: nowServingNumbers.length,
+                          return chkNumList.isEmpty
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    :ListView.builder(
+                            // itemCount: nowServingNumbers.length
+                            itemCount: servedNumList['chk_data'].length,
                             itemBuilder: (itemBuilder, index) {
                               return InkWell(
                                 onDoubleTap: () {
                                   Repositories().updateChk(
-                                      nowServingNumbers[index]['id'], 'SERVED');
-                                  nowServingNumbers.removeAt(index);
+                                      servedNumList['chk_data'][index]['id'], 'SERVED');
+                                  // nowServingNumbers.removeAt(index);
+                                  nowServingNumbers.clear();
                                   setState(() {});
                                 },
                                 child: Padding(
@@ -245,12 +238,13 @@ class _HomePageState extends State<HomePage> {
                                     color: MyColors()
                                         .mainColor, // Set the card background color
                                     child: Text(
-                                      nowServingNumbers[index]['chk_num']
+                                      // nowServingNumbers[index]['chk_num']
+                                      servedNumList['chk_data'][index]['chk_num']
                                           .toString(),
                                       style: TextStyle(
                                         fontSize: 30,
                                         fontWeight: FontWeight.bold,
-                                        color: MyColors().mainColor2,
+                                        color: MyColors().white,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
