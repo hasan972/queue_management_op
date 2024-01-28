@@ -18,8 +18,6 @@ class Api {
   static String address = 'https://my.transcombd.com/queue_management';
   static String app = 'queue_management';
 
-  static String getChkNum(String chkOpen) =>
-      '$address/default/get_chk?chk_open=$chkOpen';
-  static String updateChkNum(int id, String status) =>
-      '$address/default/update_chk?id=$id&status=$status';
+  static String getChkNum(String chkOpen) =>'$address/default/get_chk?chk_open=$chkOpen';
+  static String updateChkNum(int id, String status) => '$address/default/update_chk?id=$id&status=$status';
 }
