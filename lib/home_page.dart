@@ -408,6 +408,10 @@ class _HomePageState extends State<HomePage> {
                                                           [index]['id'],
                                                       'F',
                                                     );
+                                                    revarseList.remove(
+                                                        servedNumList[
+                                                                'chk_data']
+                                                            [index]['id']);
                                                     // setState(() {
                                                     //   revarseList[servedNumList[
                                                     //           'chk_data'][index]
