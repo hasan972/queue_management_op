@@ -16,7 +16,9 @@ class _HomePageState extends State<HomePage> {
   bool isCrossVisible = false;
   Map chkNumList = {};
   Map servedNumList = {};
+  List servedNumListCopy = [];
   Map<int, bool> revarseList = {};
+  List nowServingNumbers = [];
 
   @override
   void initState() {
@@ -30,27 +32,20 @@ class _HomePageState extends State<HomePage> {
       (timer) async {
         chkNumList = await Repositories().getChk('F');
         servedNumList = await Repositories().getChk('SERVING');
-
-       
-//  servedNumList['chk_data'].forEach((element) {
-         
-//         });
-
-         servedNumList['chk_data'].forEach((element) {
-         
-              revarseList[element['id']] = true;
-       
+        servedNumListCopy = List.from(servedNumList['chk_data']);
+        revarseList.forEach((key, value) {
+          // print(servedNumListCopy);
+          servedNumListCopy.removeWhere((element) => element['id'] == key);
         });
 
+        servedNumListCopy.forEach((element) {
+          revarseList[element['id']] = false;
+        });
 
         setState(() {});
       },
     );
-
-    
   }
-
-  List nowServingNumbers = [];
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                           Expanded(
                             child: GridView.builder(
                               shrinkWrap: true,
-                              padding: EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8.0),
                               scrollDirection: Axis.vertical,
                               gridDelegate:
                                   const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -158,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                                         chkNumList['chk_data'][index]['id'],
                                         'SERVING');
                                   },
-                                  child: Container(
+                                  child: SizedBox(
                                     height: 80,
                                     width: 160,
                                     child: Padding(
@@ -307,7 +302,8 @@ class _HomePageState extends State<HomePage> {
                                   child: CircularProgressIndicator(),
                                 )
                               : Padding(
-                                  padding: EdgeInsets.only(left: 8, right: 8),
+                                  padding:
+                                      const EdgeInsets.only(left: 8, right: 8),
                                   child: GridView.builder(
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
@@ -328,6 +324,9 @@ class _HomePageState extends State<HomePage> {
                                           );
 
                                           nowServingNumbers.clear();
+                                          revarseList.remove(
+                                              servedNumList['chk_data'][index]
+                                                  ['id']);
                                           setState(() {});
                                         },
                                         onLongPress: () {
@@ -350,16 +349,16 @@ class _HomePageState extends State<HomePage> {
                                             },
                                           );
                                         },
-                                        onTap: () {
-                                          Repositories().updateChk(
-                                            servedNumList['chk_data'][index]
-                                                ['id'],
-                                            'F',
-                                          );
-                                          setState(() {
-                                            isCrossVisible = false;
-                                          });
-                                        },
+                                        // onTap: () {
+                                        //   Repositories().updateChk(
+                                        //     servedNumList['chk_data'][index]
+                                        //         ['id'],
+                                        //     'F',
+                                        //   );
+                                        //   setState(() {
+                                        //     isCrossVisible = false;
+                                        //   });
+                                        // },
                                         child: Stack(
                                           children: [
                                             Container(
@@ -409,11 +408,11 @@ class _HomePageState extends State<HomePage> {
                                                           [index]['id'],
                                                       'F',
                                                     );
-                                                    setState(() {
-                                                      revarseList[servedNumList[
-                                                              'chk_data'][index]
-                                                          ['id']] = false;
-                                                    });
+                                                    // setState(() {
+                                                    //   revarseList[servedNumList[
+                                                    //           'chk_data'][index]
+                                                    //       ['id']] = false;
+                                                    // });
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
