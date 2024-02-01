@@ -33,14 +33,16 @@ class _HomePageState extends State<HomePage> {
         chkNumList = await Repositories().getChk('F');
         servedNumList = await Repositories().getChk('SERVING');
         servedNumListCopy = List.from(servedNumList['chk_data']);
-        revarseList.forEach((key, value) {
-          // print(servedNumListCopy);
-          servedNumListCopy.removeWhere((element) => element['id'] == key);
-        });
-
-        servedNumListCopy.forEach((element) {
-          revarseList[element['id']] = false;
-        });
+        revarseList.forEach(
+          (key, value) {
+            servedNumListCopy.removeWhere((element) => element['id'] == key);
+          },
+        );
+        servedNumListCopy.forEach(
+          (element) {
+            revarseList[element['id']] = false;
+          },
+        );
 
         setState(() {});
       },
@@ -238,252 +240,264 @@ class _HomePageState extends State<HomePage> {
             ),
             //============================================ Now Serving Section==================================//
             Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 2.0),
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 100),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 15,
-                            width: 15,
-                            color: MyColors().mainColor,
-                          ),
-                          const SizedBox(height: 5),
-                          Container(
-                            height: 15,
-                            width: 15,
-                            color: MyColors().mainColor,
-                          ),
-                          const SizedBox(height: 5),
-                          Container(
-                            height: 15,
-                            width: 15,
-                            color: MyColors().mainColor,
-                          ),
-                        ],
+              child: GestureDetector(
+                onTap: () {
+                
+                  revarseList.forEach((key, value) {
+                 
+                    revarseList[key]=false;
+                 
+                  
+                  });
+              setState(() {
+                    
+                  });
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: MyColors().white,
+                    border: Border.all(color: Colors.black, width: 2.0),
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 100),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
+                              color: MyColors().mainColor,
+                            ),
+                            const SizedBox(height: 5),
+                            Container(
+                              height: 15,
+                              width: 15,
+                              color: MyColors().mainColor,
+                            ),
+                            const SizedBox(height: 5),
+                            Container(
+                              height: 15,
+                              width: 15,
+                              color: MyColors().mainColor,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 5, bottom: 5, left: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'NOW SERVING',
-                            style: TextStyle(
-                                color: MyColors().mainColor,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 5, bottom: 5, left: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'NOW SERVING',
+                              style: TextStyle(
+                                  color: MyColors().mainColor,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: DragTarget(
-                        onAccept: (data) {
-                          setState(
-                            () {
-                              nowServingNumbers.add(data);
-                              //revarseList.add(data);
-                            },
-                          );
-                        },
-                        builder: (context, candidateData, rejectedData) {
-                          return chkNumList.isEmpty
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 8, right: 8),
-                                  child: GridView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent: 150,
-                                            childAspectRatio: 4 / 2,
-                                            crossAxisSpacing: 10,
-                                            mainAxisSpacing: 2),
-                                    itemCount: servedNumList['chk_data'].length,
-                                    itemBuilder: (itemBuilder, index) {
-                                      return GestureDetector(
-                                        onDoubleTap: () {
-                                          Repositories().updateChk(
-                                            servedNumList['chk_data'][index]
-                                                ['id'],
-                                            'SERVED',
-                                          );
-
-                                          nowServingNumbers.clear();
-                                          revarseList.remove(
+                      Expanded(
+                        child: DragTarget(
+                          onAccept: (data) {
+                            setState(
+                              () {
+                                nowServingNumbers.add(data);
+                                //revarseList.add(data);
+                              },
+                            );
+                          },
+                          builder: (context, candidateData, rejectedData) {
+                            return chkNumList.isEmpty
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8),
+                                    child: GridView.builder(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                                              maxCrossAxisExtent: 150,
+                                              childAspectRatio: 4 / 2,
+                                              crossAxisSpacing: 10,
+                                              mainAxisSpacing: 2),
+                                      itemCount:
+                                          servedNumList['chk_data'].length,
+                                      itemBuilder: (itemBuilder, index) {
+                                        return GestureDetector(
+                                          onDoubleTap: () {
+                                            Repositories().updateChk(
                                               servedNumList['chk_data'][index]
-                                                  ['id']);
-                                          setState(() {});
-                                        },
-                                        onLongPress: () {
-                                          // var a = nowServingNumbers[index]['id'];
-                                          // var b = revarseList[index]['id'];
-                                          // if (a == b) {
-                                          //   setState(
-                                          //     () {
-                                          //       isCrossVisible = true;
-                                          //     },
-                                          //   );
-                                          // }
-                                          // if(nowServingNumbers[index]['id'] = servedNumList[index]['id'])
-                                          setState(
-                                            () {
-                                              // isCrossVisible = true;
-                                              revarseList[
-                                                  servedNumList['chk_data']
-                                                      [index]['id']] = true;
-                                            },
-                                          );
-                                        },
-                                        // onTap: () {
-                                        //   Repositories().updateChk(
-                                        //     servedNumList['chk_data'][index]
-                                        //         ['id'],
-                                        //     'F',
-                                        //   );
-                                        //   setState(() {
-                                        //     isCrossVisible = false;
-                                        //   });
-                                        // },
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              height: 80,
-                                              width: 160,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(7.0),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    color: MyColors().mainColor,
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      servedNumList['chk_data']
-                                                              [index]['chk_num']
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                        fontSize: 30,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: MyColors().white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            if (revarseList[servedNumList[
-                                                            'chk_data'][index]
-                                                        ['id']] !=
-                                                    null &&
-                                                revarseList[servedNumList[
-                                                            'chk_data'][index]
-                                                        ['id']] ==
-                                                    true)
-                                              Positioned(
-                                                top: 0,
-                                                right: 0,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    Repositories().updateChk(
-                                                      servedNumList['chk_data']
-                                                          [index]['id'],
-                                                      'F',
-                                                    );
-                                                    revarseList.remove(
-                                                        servedNumList[
-                                                                'chk_data']
-                                                            [index]['id']);
-                                                    // setState(() {
-                                                    //   revarseList[servedNumList[
-                                                    //           'chk_data'][index]
-                                                    //       ['id']] = false;
-                                                    // });
-                                                  },
+                                                  ['id'],
+                                              'SERVED',
+                                            );
+
+                                            nowServingNumbers.clear();
+                                            revarseList.remove(
+                                                servedNumList['chk_data'][index]
+                                                    ['id']);
+                                            setState(() {});
+                                          },
+                                          onLongPress: () {
+                                            setState(
+                                              () {
+                                                // isCrossVisible = true;
+                                                // revarseList[
+                                                //     servedNumList['chk_data']
+                                                //         [index]['id']] = true ? revarseList[
+                                                //     servedNumList['chk_data']
+                                                //         [index]['id']] = false ;
+                                                revarseList[
+                                                    servedNumList['chk_data']
+                                                            [index]
+                                                        ['id']] = revarseList[
+                                                                servedNumList['chk_data']
+                                                                        [index]
+                                                                    ['id']] !=
+                                                            null &&
+                                                        revarseList[servedNumList[
+                                                                    'chk_data']
+                                                                [index]['id']] ==
+                                                            true
+                                                    ? false
+                                                    : true;
+                                              },
+                                            );
+                                          },
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                height: 80,
+                                                width: 160,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(7.0),
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color:
-                                                            Colors.grey[200]),
-                                                    height: 20,
-                                                    width: 20,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      color:
+                                                          MyColors().mainColor,
+                                                    ),
                                                     child: Center(
-                                                      child: Icon(
-                                                        Icons.clear,
-                                                        size: 18,
-                                                        color: MyColors()
-                                                            .mainColor,
+                                                      child: Text(
+                                                        servedNumList['chk_data']
+                                                                    [index]
+                                                                ['chk_num']
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                          fontSize: 30,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color:
+                                                              MyColors().white,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                );
+                                              if (revarseList[servedNumList[
+                                                              'chk_data'][index]
+                                                          ['id']] !=
+                                                      null &&
+                                                  revarseList[servedNumList[
+                                                              'chk_data'][index]
+                                                          ['id']] ==
+                                                      true)
+                                                Positioned(
+                                                  top: 0,
+                                                  right: 0,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      Repositories().updateChk(
+                                                        servedNumList[
+                                                                'chk_data']
+                                                            [index]['id'],
+                                                        'F',
+                                                      );
+                                                      revarseList.remove(
+                                                          servedNumList[
+                                                                  'chk_data']
+                                                              [index]['id']);
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color:
+                                                              Colors.grey[200]),
+                                                      height: 20,
+                                                      width: 20,
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.clear,
+                                                          size: 18,
+                                                          color: MyColors()
+                                                              .mainColor,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
 
-                          // ListView.builder(
-                          //     // itemCount: nowServingNumbers.length
-                          //     itemCount: servedNumList['chk_data'].length,
-                          //     itemBuilder: (itemBuilder, index) {
-                          //       return InkWell(
-                          //         onDoubleTap: () {
-                          //           Repositories().updateChk(
-                          //               servedNumList['chk_data'][index]
-                          //                   ['id'],
-                          //               'SERVED');
-                          //           // nowServingNumbers.removeAt(index);
-                          //           nowServingNumbers.clear();
-                          //           setState(() {});
-                          //         },
-                          //         child: Padding(
-                          //           padding: const EdgeInsets.symmetric(
-                          //               horizontal: 120, vertical: 0),
-                          //           child: Card(
-                          //             color: MyColors()
-                          //                 .mainColor, // Set the card background color
-                          //             child: Text(
-                          //               // nowServingNumbers[index]['chk_num']
-                          //               servedNumList['chk_data'][index]
-                          //                       ['chk_num']
-                          //                   .toString(),
-                          //               style: TextStyle(
-                          //                 fontSize: 30,
-                          //                 fontWeight: FontWeight.bold,
-                          //                 color: MyColors().white,
-                          //               ),
-                          //               textAlign: TextAlign.center,
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       );
-                          //     },
-                          //   );
-                        },
+                            // ListView.builder(
+                            //     // itemCount: nowServingNumbers.length
+                            //     itemCount: servedNumList['chk_data'].length,
+                            //     itemBuilder: (itemBuilder, index) {
+                            //       return InkWell(
+                            //         onDoubleTap: () {
+                            //           Repositories().updateChk(
+                            //               servedNumList['chk_data'][index]
+                            //                   ['id'],
+                            //               'SERVED');
+                            //           // nowServingNumbers.removeAt(index);
+                            //           nowServingNumbers.clear();
+                            //           setState(() {});
+                            //         },
+                            //         child: Padding(
+                            //           padding: const EdgeInsets.symmetric(
+                            //               horizontal: 120, vertical: 0),
+                            //           child: Card(
+                            //             color: MyColors()
+                            //                 .mainColor, // Set the card background color
+                            //             child: Text(
+                            //               // nowServingNumbers[index]['chk_num']
+                            //               servedNumList['chk_data'][index]
+                            //                       ['chk_num']
+                            //                   .toString(),
+                            //               style: TextStyle(
+                            //                 fontSize: 30,
+                            //                 fontWeight: FontWeight.bold,
+                            //                 color: MyColors().white,
+                            //               ),
+                            //               textAlign: TextAlign.center,
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       );
+                            //     },
+                            //   );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

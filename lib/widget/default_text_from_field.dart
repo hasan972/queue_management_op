@@ -73,7 +73,7 @@ class DefaultTextFormField extends StatelessWidget {
             child: SvgPicture.asset(
               imageUrl,
               fit: BoxFit.cover,
-              color: MyColors().white,
+              color: MyColors().black,
             ),
           ),
         ),

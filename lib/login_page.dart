@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           'Connect',
                           style: GoogleFonts.inter(
-                            color: MyColors().black,
+                            color: MyColors().white,
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
                           ),
