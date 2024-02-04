@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:queue_management_op/services/provider.dart';
+import 'package:kfc_queue_management_op/services/provider.dart';
 
 class Repositories {
   Future getChk(

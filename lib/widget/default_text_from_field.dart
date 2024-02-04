@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:queue_management_op/theme/color/my_colors.dart';
+import 'package:kfc_queue_management_op/theme/color/my_colors.dart';
 
 class DefaultTextFormField extends StatelessWidget {
   final String text;

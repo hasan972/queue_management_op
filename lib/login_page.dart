@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:queue_management_op/home_page.dart';
-import 'package:queue_management_op/theme/color/my_colors.dart';
-import 'package:queue_management_op/widget/constant.dart';
-import 'package:queue_management_op/widget/default_text_from_field.dart';
+import 'package:kfc_queue_management_op/home_page.dart';
+import 'package:kfc_queue_management_op/theme/color/my_colors.dart';
+import 'package:kfc_queue_management_op/widget/constant.dart';
+import 'package:kfc_queue_management_op/widget/default_text_from_field.dart';
 
 
 class LoginPage extends StatefulWidget {

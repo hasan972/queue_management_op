@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:queue_management_op/services/repositories.dart';
-import 'package:queue_management_op/theme/color/my_colors.dart';
+import 'package:kfc_queue_management_op/services/repositories.dart';
+import 'package:kfc_queue_management_op/theme/color/my_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                             child: Row(
                               children: [
                                 Text(
-                                  'IN PROCESS',
+                                  'In Process',
                                   style: TextStyle(
                                       color: MyColors().white,
                                       fontSize: 25,
@@ -242,16 +242,10 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                
                   revarseList.forEach((key, value) {
-                 
-                    revarseList[key]=false;
-                 
-                  
+                    revarseList[key] = false;
                   });
-              setState(() {
-                    
-                  });
+                  setState(() {});
                 },
                 child: Container(
                   width: double.infinity,
@@ -293,7 +287,7 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'NOW SERVING',
+                              'Now Serving',
                               style: TextStyle(
                                   color: MyColors().mainColor,
                                   fontSize: 25,
@@ -496,6 +490,21 @@ class _HomePageState extends State<HomePage> {
                           },
                         ),
                       ),
+                      Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(3),
+                      color: MyColors().mainColor.withOpacity(1),
+                      // Adjust padding as needed
+                      child: Text(
+                        'Powered By: Transcom Technology',
+                        style: TextStyle(fontSize: 12, color: MyColors().white),
+                        
+                      ),
+                    ),
+                  ],
+                ),
                     ],
                   ),
                 ),

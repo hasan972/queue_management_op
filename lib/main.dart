@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:queue_management_op/login_page.dart';
-import 'package:queue_management_op/splash_screen.dart';
+import 'package:kfc_queue_management_op/login_page.dart';
+import 'package:kfc_queue_management_op/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
