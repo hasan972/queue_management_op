@@ -5,7 +5,7 @@ import 'package:queue_management_op/home_page.dart';
 import 'package:queue_management_op/theme/color/my_colors.dart';
 import 'package:queue_management_op/widget/constant.dart';
 import 'package:queue_management_op/widget/default_text_from_field.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
- // TextEditingController userId = TextEditingController();
+  // TextEditingController userId = TextEditingController();
   TextEditingController ipAddress = TextEditingController();
   TextEditingController portController = TextEditingController();
 
@@ -25,8 +25,15 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    ipAddress.text = ip;
-    portController.text = port;
+    SharedPreferences.getInstance().then((prefs) {
+      final String ipLocal = prefs.getString('ip') ?? ip;
+      final String portLocal = prefs.getString('port') ?? port;
+      ip = ipLocal;
+      port = portLocal;
+      ipAddress.text = ip;
+      portController.text = port;
+      setState(() {});
+    });
   }
 
   @override
@@ -56,11 +63,11 @@ class _LoginPageState extends State<LoginPage> {
                 height: MediaQuery.of(context).size.height -
                     MediaQuery.of(context).size.height / 3.10,
                 decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10 * 1.2),
-                        topRight: Radius.circular(10 * 1.2)),
-                        ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10 * 1.2),
+                      topRight: Radius.circular(10 * 1.2)),
+                ),
                 child: Column(
                   children: [
                     // Container(
@@ -81,7 +88,6 @@ class _LoginPageState extends State<LoginPage> {
                       key: _formKey,
                       child: Column(
                         children: [
-                         
                           // Padding(
                           //   padding: const EdgeInsets.only(
                           //     left: 30,
@@ -100,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                           //     obsState: () {},
                           //   ),
                           // ),
-                           Padding(
+                          Padding(
                             padding: const EdgeInsets.only(
                               left: 30,
                               right: 30,
@@ -113,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                               controller: ipAddress,
                               inputType: TextInputType.number,
                               emptyMessage: 'Please enter your IP Address',
-                             obscure: false,
+                              obscure: false,
                               obsState: () {},
                             ),
                           ),
@@ -130,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                               controller: portController,
                               inputType: TextInputType.number,
                               emptyMessage: 'Please enter your port',
-                             obscure: false,
+                              obscure: false,
                               obsState: () {},
                             ),
                           ),
@@ -148,7 +154,8 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () async {
                         ip = ipAddress.text;
                         port = portController.text;
-                        Navigator.push(context, MaterialPageRoute(builder: (_)=>HomePage()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => HomePage()));
                       },
                       child: Container(
                         alignment: Alignment.center,
