@@ -1,6 +1,6 @@
 {
-    "name": "queue_management_op",
-    "short_name": "queue_management_op",
+    "name": "kfc_queue_management_op",
+    "short_name": "kfc_queue_management_op",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

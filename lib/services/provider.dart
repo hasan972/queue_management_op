@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:queue_management_op/services/apis.dart';
+import 'package:kfc_queue_management_op/services/apis.dart';
 
 class Provider {
   Future<http.Response> getChkNumDP(

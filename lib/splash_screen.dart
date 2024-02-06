@@ -1,7 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:queue_management_op/home_page.dart';
-import 'package:queue_management_op/login_page.dart';
+import 'package:kfc_queue_management_op/home_page.dart';
+import 'package:kfc_queue_management_op/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
