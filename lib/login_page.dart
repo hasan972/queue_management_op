@@ -36,6 +36,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    ipAddress.dispose();
+    portController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -151,10 +159,18 @@ class _LoginPageState extends State<LoginPage> {
                     //Login Button
                     InkWell(
                       onTap: () async {
+                        // Obtain shared preferences.
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        await prefs.setString('ip', ipAddress.text);
+                        await prefs.setString('port', portController.text);
                         ip = ipAddress.text;
                         port = portController.text;
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => HomePage()));
+                        if (!mounted) return;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const HomePage()));
                       },
                       child: Container(
                         alignment: Alignment.center,

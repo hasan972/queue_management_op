@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             revarseList[element['id']] = false;
           },
         );
-
+        if (!mounted) return;
         setState(() {});
       },
     );
@@ -491,20 +491,20 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(3),
-                      color: MyColors().mainColor.withOpacity(1),
-                      // Adjust padding as needed
-                      child: Text(
-                        'Powered By: Transcom Technology',
-                        style: TextStyle(fontSize: 12, color: MyColors().white),
-                        
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(3),
+                            color: MyColors().mainColor.withOpacity(1),
+                            // Adjust padding as needed
+                            child: Text(
+                              'Powered By: Transcom Technology',
+                              style: TextStyle(
+                                  fontSize: 12, color: MyColors().white),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
                     ],
                   ),
                 ),
